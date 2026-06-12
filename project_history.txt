@@ -1,0 +1,128 @@
+    1  ip a
+    2  lsblk
+    3  poweroff
+    4  lsblk
+    5  nmcli con mod enp0s3 ipv4.addresses 192.168.1.100/24
+    6  nmcli con show
+    7  nmcli con mod "Проводное подключение 1" ipv4.addresses 192.168.1.100/24
+    8  nmcli con mod "Проводное подключение 1" ipv4.gateway 192.168.1.1
+    9  nmcli con mod "Проводное подключение 1" ipv4.dns 8.8.8.8
+   10  nmcli con down "Проводное подключение 1" && nmcli con up "Проводное подключение 1"
+   11  ip a show enp0s3
+   12  hostname
+   13  hostnamectl set-hostname mephi-2026.domain.local
+   14  hostname
+   15  ping -c 4 8.8.8.8 > /temp/network_check.txt
+   16  ping -c 4 192.168.1.1 >> /temp/network_check.txt
+   17  cat /tmp/network_check.txt
+   18  ping -c 4 8.8.8.8 > /tmp/network_check.txt
+   19  ping -c 4 192.168.1.1 >> /tmp/network_check.txt
+   20  cat /tmp/network_check.txt
+   21  dnf install -y nginx tcpdump libcap-ng-utils
+   22  echo "nameserver 8.8.8.8" > /etc/resolv.conf
+   23  ping -c 2 google.com
+   24  nmcli con mod "Проводное подключение 1" ipv4.method auto
+   25  nmcli con down "Проводное подключение 1" && nmcli con up "Проводное подключение 1"
+   26  ping -c 2 google.com
+   27  echo "nameserver 8.8.8.8" > /etc/resolv.conf
+   28  ping -c 2 8.8.8.8
+   29  nmcli con del "Проводное подключение 1"
+   30  systemctl restart NetworkManager
+   31  sleep 5
+   32  ip a show enp0s3
+   33  echo "nameserver 8.8.8.8" > /etc/resolv.conf
+   34  ping -c 2 google.com
+   35  dnf install -y nginx tcpdump libcap-ng-utils
+   36  nmcli con add type ethernet ifname enp0s3 con-name "Проводное подключение 1"
+   37  nmcli con mod "Проводное подключение 1" ipv4.addresses 192.168.1.100/24
+   38  nmcli con show
+   39  nmcli con del f91c0cfc-1aa6-4d65-8e8f-4c8a9308da9b
+   40  nmcli con add type ethernet ifname enp0s3 con-name "Проводное подключение 1"
+   41  nmcli con show
+   42  nmcli con del f95e02bd-ce86-41e1-b9cf-bfa31a8a0fe2
+   43  nmcli con show
+   44  nmcli con mod c27971cc-a72c-3208-9e62-37a06db14f25
+   45  nmcli con mod c27971cc-a72c-3208-9e62-37a06db14f25 ipv4.addresses 192.168.1.100/24
+   46  nmcli con mod c27971cc-a72c-3208-9e62-37a06db14f25 ipv4.gateway 192.168.1.1
+   47  nmcli con mod c27971cc-a72c-3208-9e62-37a06db14f25 ipv4.dns 8.8.8.8
+   48  nmcli con mod c27971cc-a72c-3208-9e62-37a06db14f25 ipv4.method manual
+   49  nmcli con mod c27971cc-a72c-3208-9e62-37a06db14f25 && nmcli con up c27971cc-a72c-3208-9e62-37a06db14f25
+   50  ip a show enp0s3 | grep 192.168
+   51  nmcli con mod c27971cc-a72c-3208-9e62-37a06db14f25 ipv4.method auto
+   52  nmcli con down c27971cc-a72c-3208-9e62-37a06db14f25 && nmcli con up c27971cc-a72c-3208-9e62-37a06db14f25
+   53  echo "nameserver 8.8.8.8" > /etc/resolv.conf
+   54  ping -c 2 google.com
+   55  nmcli con mod c27971cc-a72c-3208-9e62-37a06db14f25 ipv4.dns 8.8.8.8
+   56  nmcli con down c27971cc-a72c-3208-9e62-37a06db14f25 && nmcli con up c27971cc-a72c-3208-9e62-37a06db14f25
+   57  echo "nameserver 8.8.8.8" > /etc/resolv.conf
+   58  ping -c 2 google.com
+   59  echo "nameserver 8.8.8.8" > /etc/resolv.conf
+   60  chattr +i/etc/resolv.conf
+   61  ping -c 2 google.com
+   62  ping -c 2 142.251.1.139
+   63  rm -f /etc/resolv.conf
+   64  nmcli con del c27971cc-a72c-3208-9e62-37a06db14f25 2>/dev/null
+   65  systemctl restart NetworkManager
+   66  sleep 10
+   67  ip a show enp0s3
+   68  ping -c 2 8.8.8.8
+   69  dnf download --destdir=/tmp tcpdump
+   70  ls /tmp/tcpdump*.rpm
+   71  rpm -ivh /tmp/tcpdump-4.99.6-3.fc44.x86_64.rpm --force
+   72  nmcli con add type enthernet ifname enp0s3 con-name "static-ip"
+   73  nmcli con add type ethernet ifname enp0s3 con-name "static-ip"
+   74  nmcli con mod "static-ip" ipv4.addresses 192.168.1.100/24
+   75  nmcli con mod "static-ip" ipv4.gateway 192.168.1.1
+   76  nmcli con mod "static-ip" ipv4.dns 8.8.8.8
+   77  nmcli con mod "static-ip" ipv4.method manual
+   78  nmcli con up "static-ip"
+   79  ip a show enp0s3 | grep 192.168
+   80  parted /dev/sdb mklabel msdos
+   81  parted /dev/sdb mkpart primary ext4 0% 100%
+   82  mkfs.ext4 -L MEPHI_DATA /dev/sdb1
+   83  mkdir -p /data/mephi-web
+   84  mount /dev/sdb1 /data/mephi-web
+   85  echo "LABEL=MEPHI_DATA /data/mephi-web ext4 defaults 0 2" >> /etc/fstab
+   86  df -h /data/mephi-web
+   87  cat /etc/fstab | grep MEPHI
+   88  systemctl start nginx
+   89  systemctl enable nginx
+   90  system status nginx | head -5
+   91  systemctl status nginx | head -5
+   92  jounalctl -u nginx --since "5 minutes ago" > /tmp/nginx_recent_logs.txt
+   93  journalctl -u nginx --since "5 minutes ago" > /tmp/nginx_recent_logs.txt
+   94  cat /tmp/nginx_recemt_logs.txt
+   95  cat /tmp/nginx_recent_logs.txt
+   96  useradd mephi-admin
+   97  groupadd mephi-devs
+   98  usermod -aG mephi-devs mephi-admin
+   99  echo "mephi-admin:P@ssw0rd2026" | chpasswd
+  100  chown mephi-admin:mephi-devs /data/mephi-web
+  101  chmod 2775 /data/mephi-web
+  102  id mephi-admin
+  103  getent group mephi-devs
+  104  stat /data/mephi-web
+  105  getenforce
+  106  semanage fcontext -a -t httpd_sys_content_t "/data/me[hi-web(/.*)?"
+  107  restorecon -Rv /data/mephi-web
+  108  ls -Zd /data/mephi-web
+  109  semanage fcontext -a -t httpd_sys_content_t "/data/mephi-web(/.*)?"
+  110  restorecon -Rv /data/mephi-web
+  111  ls -Zd /data/mephi-web
+  112  chmod u-s /usr/sbin/tcpdump
+  113  setcap cap_net_raw,cap_net_admin=ep /usr/sbin/tcpdump
+  114  getcap /usr/sbin/tcpdump
+  115  sudo -u mephi-admin tcpdump --help 2>&1 | head -3
+  116  echo "root" > /etc/ssh/denied_users
+  117  sed -i '1i auth required pam_listfile.so item=user sense=deny file=/etc/ssh/denied_users onerr=succeed' /etc/pam.d/sshd
+  118  sed -i '1i auth required pam_listfile.so item=user sense=deny file=/etc/ssh/denied_users onerr=succeed' /etc/pam.d/login
+  119  cat /etc/ssh/denied_users
+  120  head -2 /etc/pam.d/sshd
+  121  echo "Hello from Student: M2551065" > /data/mephi-web/index.html
+  122  chown mephi-admin:mephi-devs /data/mephi-web/index.html
+  123  cat /data/mephi-web/index.html
+  124  sed -i 's|/usr/share/nginx/html|/data/mephi-web|g' /etc/ngins/ngins.conf
+  125  sed -i 's|/usr/share/nginx/html|/data/mephi-web|g' /etc/nginx/nginx.conf
+  126  systemctl restart nginx
+  127  curl http://localhost
+  128  history > ~/project_history.txt
